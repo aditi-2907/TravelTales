@@ -149,6 +149,10 @@ app.post("/add", async (req, res) => {
     }
 });
 
+app.get("/memories",(req,res)=>{
+    res.render("memories.ejs");
+})
+
 passport.use(
   new Strategy(async function verify(username, password, cb) {
     try {
