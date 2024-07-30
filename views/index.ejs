@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelTale</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <% if(locals.userName){ %>
+        <div class="dashboard">
+            <a href="/visited_countries" class="dashboard-button">Visited Countries</a>
+            <a href="/plan_a_trip" class="dashboard-button">Future Trips</a>
+            <a href="/profile" class="dashboard-button">profile</a>
+        </div>
+        
+    <% }else{ %>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    <% } %>
+    
+</body>
+</html>
