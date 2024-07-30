@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Memories</title>
+    <style>
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .media-item {
+            width: 300px;
+        }
+        img, video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Media Files</h1>
+    <div class="media-container">
+        <% if (mediaFiles.length > 0) { %>
+            <% mediaFiles.forEach(file => { %>
+                <% if (file.startsWith('data:image/')) { %>
+                    <div class="media-item">
+                        <img src="<%= file %>" alt="Image">
+                    </div>
+                <% } else if (file.startsWith('data:video/')) { %>
+                    <div class="media-item">
+                        <video controls>
+                            <source src="<%= file %>" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                <% } else { %>
+                    <p>Unsupported file format: <%= file %></p>
+                <% } %>
+            <% }); %>
+        <% } else { %>
+            <p>No media files available.</p>
+        <% } %>
+    </div>
+</body>
+</html>

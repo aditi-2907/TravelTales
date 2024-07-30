@@ -3,9 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelTale</title>
+    <title>Country Selector</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content div {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content div:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h1>memory</h1>
+    <h1>Select a Country</h1>
+    <div class="dropdown">
+        <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for countries..">
+        <div id="dropdown" class="dropdown-content">
+            <% countries1.forEach(country => { %>
+                <div onclick="selectCountry('<%= country %>')"><%= country %></div>
+            <% }); %>
+        </div>
+    </div>
+    <form id="form1" action="/Upload_memories" method="post" style="display: inline;">
+        <input type="hidden" name="country" id="selectedCountry1">
+        <button type="submit">Create Memories</button>
+    </form>
+    <form id="form2" action="/watch_memories" method="post" style="display: inline;">
+        <input type="hidden" name="country" id="selectedCountry2">
+        <button type="submit">See Memories</button>
+    </form>
+
+    <script>
+        function filterFunction() {
+            const input = document.getElementById('countryInput');
+            const filter = input.value.toUpperCase();
+            const div = document.getElementById('dropdown');
+            const items = div.getElementsByTagName('div');
+            div.classList.add('show');
+            for (let i = 0; i < items.length; i++) {
+                const txtValue = items[i].textContent || items[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    items[i].style.display = '';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        }
+
+        function selectCountry(country) {
+            document.getElementById('countryInput').value = country;
+            document.getElementById('selectedCountry1').value = country;
+            document.getElementById('selectedCountry2').value = country;
+            document.getElementById('dropdown').classList.remove('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown');
+            if (!event.target.matches('#countryInput')) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
