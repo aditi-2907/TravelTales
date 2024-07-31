@@ -29,9 +29,27 @@
         .show {
             display: block;
         }
+        .flash-message {
+          color: green;
+          display: none;
+        }
     </style>
+      <script>
+        window.onload = function() {
+          const flashMessage = document.querySelector('.flash-message');
+          if (flashMessage) {
+            flashMessage.style.display = 'block';
+            setTimeout(() => {
+              flashMessage.style.display = 'none';
+            }, 5000); // Hide after 5 seconds
+          }
+        };
+      </script>
 </head>
 <body>
+    <% if (messages.success) { %>
+        <div class="flash-message"><%= messages.success %></div>
+    <% } %>
     <h1>Select a Country</h1>
     <div class="dropdown">
         <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for countries..">

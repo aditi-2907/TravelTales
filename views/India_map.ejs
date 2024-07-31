@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map of India</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .marker {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background-color: rgb(20, 20, 58);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .marker-label {
+            position: absolute;
+            font-size: 12px;
+            color: black;
+            white-space: nowrap;
+            transform: translate(-50%, -50%);
+            display: none; /* Hidden by default */
+            background-color: white;
+            padding: 2px 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .marker:hover .marker-label {
+            display: block; /* Show on hover */
+        }
+        .mapa {
+            position: absolute;
+            top: 2vh;
+            left: 27vw;
+            height: 96vh;
+            width: 46vw;
+        }
+        .chk {
+            position: absolute;
+            top: 7vh;
+            left: 34vw;
+            height: 1px;
+            width: 1px;
+            z-index: 100000;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            z-index: 10000000;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content div {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content div:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        .flash-message {
+          color: green;
+          display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dropdown">
+        <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for cities..">
+        <div id="dropdown" class="dropdown-content">
+            <% countries1.forEach(country => { %>
+                <div onclick="selectCountry('<%= country %>')"><%= country %></div>
+            <% }); %>
+        </div>
+        <form id="form1" action="/addCity" method="post" style="display: inline;">
+            <input type="hidden" name="city" id="selectedCountry1">
+            <button type="submit">Add City</button>
+        </form>
+    </div>
+    <div class="chk"></div>
+    <div id="map-container">
+        <div class="mapa">
+            <img id="map" src="/mp.jpg" alt="Map of India">
+        </div>
+
+        <!-- Cities markers -->
+        <% cities.forEach(city => { %>
+            <div class="marker" data-lat="<%= city.latitude %>" data-lng="<%= city.longitude %>">
+                <div class="marker-label">
+                    <a href="#" class="city-link" data-city="<%= city.name %>"><%= city.name %></a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <!-- Hidden forms for POST requests -->
+    <form id="city-form-1" action="/uploadIndia" method="POST" style="display: none;">
+        <input type="hidden" name="city" id="city-input-1">
+    </form>
+    <form id="city-form-2" action="/showIndia" method="POST" style="display: none;">
+        <input type="hidden" name="city" id="city-input-2">
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mapImage = document.getElementById('map');
+            const markers = document.querySelectorAll('.marker');
+            
+            // Replace `a` with the actual value from the server, which should be passed to the script
+            const a = <%= JSON.stringify(a1) %>; // This should be passed from your server to the client-side script
+
+            mapImage.onload = function() {
+                const mapWidth = mapImage.width;
+                const mapHeight = mapImage.height;
+
+                // Map boundaries in latitude and longitude
+                const mapBounds = {
+                    top: 38,    // Northern boundary
+                    bottom: 9,  // Southern boundary
+                    left: 51,   // Western boundary
+                    right: 80   // Eastern boundary
+                };
+
+                function convertLatLngToPixel(lat, lng) {
+                    // Calculate percentage position within map boundaries
+                    const latPercent = (lat - mapBounds.bottom) / (mapBounds.top - mapBounds.bottom);
+                    const lngPercent = (lng - mapBounds.left) / (mapBounds.right - mapBounds.left);
+
+                    // Convert percentage to pixel position
+                    const x = lngPercent * mapWidth;
+                    const y = (1 - latPercent) * mapHeight; // Invert y-axis for correct orientation
+                    return { x, y };
+                }
+
+                markers.forEach(marker => {
+                    const lat = parseFloat(marker.getAttribute('data-lat'));
+                    const lng = parseFloat(marker.getAttribute('data-lng'));
+                    const { x, y } = convertLatLngToPixel(lat, lng);
+                    marker.style.left = `${x}px`;
+                    marker.style.top = `${y}px`;
+                });
+            };
+
+            // Handle city link click
+            document.querySelectorAll('.city-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const cityName = this.getAttribute('data-city');
+
+                    // Set the city name in the appropriate hidden input field based on the value of `a`
+                    if (a === 1) {
+                        document.getElementById('city-input-1').value = cityName;
+                        document.getElementById('city-form-1').submit();
+                    } else {
+                        document.getElementById('city-input-2').value = cityName;
+                        document.getElementById('city-form-2').submit();
+                    }
+                });
+            });
+        });
+    </script>
+     <script>
+        function filterFunction() {
+            const input = document.getElementById('countryInput');
+            const filter = input.value.toUpperCase();
+            const div = document.getElementById('dropdown');
+            const items = div.getElementsByTagName('div');
+            div.classList.add('show');
+            for (let i = 0; i < items.length; i++) {
+                const txtValue = items[i].textContent || items[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    items[i].style.display = '';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        }
+
+        function selectCountry(country) {
+            document.getElementById('countryInput').value = country;
+            document.getElementById('selectedCountry1').value = country;
+            document.getElementById('dropdown').classList.remove('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown');
+            if (!event.target.matches('#countryInput')) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

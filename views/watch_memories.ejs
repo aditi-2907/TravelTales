@@ -13,9 +13,10 @@
         .media-item {
             width: 300px;
         }
-        img, video {
+        img, video, audio {
             width: 100%;
             height: auto;
+            cursor: pointer; /* Add cursor pointer to indicate it's clickable */
         }
     </style>
 </head>
@@ -26,14 +27,27 @@
             <% mediaFiles.forEach(file => { %>
                 <% if (file.startsWith('data:image/')) { %>
                     <div class="media-item">
-                        <img src="<%= file %>" alt="Image">
+                        <a href="<%= file %>" download="image">
+                            <img src="<%= file %>" alt="Image">
+                        </a>
                     </div>
                 <% } else if (file.startsWith('data:video/')) { %>
                     <div class="media-item">
-                        <video controls>
-                            <source src="<%= file %>" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <a href="<%= file %>" download="video.mp4">
+                            <video controls>
+                                <source src="<%= file %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </a>
+                    </div>
+                <% } else if (file.startsWith('data:audio/')) { %>
+                    <div class="media-item">
+                        <a href="<%= file %>" download="audio.mp3">
+                            <audio controls>
+                                <source src="<%= file %>" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </a>
                     </div>
                 <% } else { %>
                     <p>Unsupported file format: <%= file %></p>
