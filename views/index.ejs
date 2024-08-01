@@ -9,15 +9,27 @@
 <body>
     <% if(locals.userName){ %>
         <h1>Hey <%= userName %></h1>
-        <div class="dashboard">
-            <a href="/visited_countries" class="dashboard-button">Visited Countries</a>
-            <a href="/plan_a_trip" class="dashboard-button">Future Trips</a>
-            <a href="/profile" class="dashboard-button">profile</a>
+        <div class="front-page">
+            <div class="bgfp">
+                <img src="/travel8.jpg">
+            </div>
+            <div class="visited">
+                <a href="/visited_countries" class="dashboard-button">Visited Countries</a>
+                <a href="/plan_a_trip" class="dashboard-button">Future Trips</a>
+                <a href="/profile" class="dashboard-button">profile</a>
+            </div>
         </div>
         
     <% }else{ %>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <div class="front-page">
+            <div class="bgfp">
+                <img src="/travel1.jpg">
+            </div>
+            <div class="login">
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            </div>
+        </div>
     <% } %>
     
 </body>

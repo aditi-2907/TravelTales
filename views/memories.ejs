@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Country Selector</title>
+    <link rel="stylesheet" href="/styles/main.css">
     <style>
         .dropdown {
             position: relative;
@@ -50,23 +51,29 @@
     <% if (messages.success) { %>
         <div class="flash-message"><%= messages.success %></div>
     <% } %>
-    <h1>Select a Country</h1>
-    <div class="dropdown">
-        <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for countries..">
-        <div id="dropdown" class="dropdown-content">
-            <% countries1.forEach(country => { %>
-                <div onclick="selectCountry('<%= country %>')"><%= country %></div>
-            <% }); %>
+    <div class="front-page">
+        <div class="bgfp">
+            <img src="travel7.jpg">
+        </div>
+        <div class="memories">
+            <div class="dropdown">
+                <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for countries..">
+                <div id="dropdown" class="dropdown-content">
+                    <% countries1.forEach(country => { %>
+                        <div onclick="selectCountry('<%= country %>')"><%= country %></div>
+                    <% }); %>
+                </div>
+            </div>
+            <form id="form1" action="/Upload_memories" method="post" style="display: inline;">
+                <input type="hidden" name="country" id="selectedCountry1">
+                <button type="submit" class="dashboard-button">Create Memories</button>
+            </form>
+            <form id="form2" action="/watch_memories" method="post" style="display: inline;">
+                <input type="hidden" name="country" id="selectedCountry2">
+                <button type="submit" class="dashboard-button">See Memories</button>
+            </form>
         </div>
     </div>
-    <form id="form1" action="/Upload_memories" method="post" style="display: inline;">
-        <input type="hidden" name="country" id="selectedCountry1">
-        <button type="submit">Create Memories</button>
-    </form>
-    <form id="form2" action="/watch_memories" method="post" style="display: inline;">
-        <input type="hidden" name="country" id="selectedCountry2">
-        <button type="submit">See Memories</button>
-    </form>
 
     <script>
         function filterFunction() {

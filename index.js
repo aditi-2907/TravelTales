@@ -25,7 +25,6 @@ const cities1 = [
   { name: 'Pune', latitude: 18.5204, longitude: 73.8567 }
 ];
 
-
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 } // Set file size limit to 50 MB
@@ -65,6 +64,7 @@ async function allgetcont(){
 }
 
 allcont = allgetcont();
+
 async function checkVisisted(id) {
     const result = await db.query("SELECT country_code FROM visited_countries WHERE id = $1",[id,]);
   

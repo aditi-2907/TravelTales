@@ -102,4 +102,36 @@ html {
     left: 0;
     bottom: 0;
   }
-  
+
+  .memory{
+    height: 8vh;
+    width: 12vw;
+    background-color: teal;
+    position:absolute;
+    top:80vh;
+    left:1vw;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* .memory:hover {
+    background-color: white; 
+  }*/
+  .memory a{
+    width: 100%;
+    height: 100%;
+    font-family: "Roboto", sans-serif;
+    font-size: 2em;
+    color:white;
+    text-decoration: none;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .memory a:hover {
+    background-color: white;
+    color: teal; /* Coral color */
+  }
