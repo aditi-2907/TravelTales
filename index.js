@@ -54,23 +54,6 @@ const db = new pg.Client({
 }); 
 db.connect();
 
-
-// let cities = [];
-
-// // Function to load cities from database
-// const loadCities = async () => {
-//   try {
-//     const result = await db.query('SELECT name, latitude, longitude FROM cities');
-//     cities = result.rows;
-//     console.log('Cities loaded:', cities);
-//   } catch (err) {
-//     console.error('Error loading cities from database:', err.stack);
-//   }
-// };
-
-// // Load cities on startup
-// loadCities();
-
 let allcont = [];
 async function allgetcont(){
     const result = await db.query("SELECT country_name FROM countries");
@@ -96,9 +79,12 @@ const getMimeType = (buffer) => {
     { mime: 'image/jpeg', signature: Buffer.from([0xFF, 0xD8, 0xFF]) },
     { mime: 'image/png', signature: Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]) },
     { mime: 'video/mp4', signature: Buffer.from([0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]) },
+    { mime: 'video/mp4', signature: Buffer.from([0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]) },
     { mime: 'audio/mpeg', signature: Buffer.from([0xFF, 0xFB]) },
     { mime: 'audio/mpeg', signature: Buffer.from([0xFF, 0xF3]) },
-    { mime: 'audio/mpeg', signature: Buffer.from([0xFF, 0xF2]) }
+    { mime: 'audio/mpeg', signature: Buffer.from([0xFF, 0xF2]) },
+    { mime: 'image/heic', signature: Buffer.from([0x00, 0x00, 0x00, 0x14, 0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63]) },
+    { mime: 'image/heic', signature: Buffer.from([0x00, 0x00, 0x00, 0x14, 0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x78]) }
   ];
 
   for (const { mime, signature } of signatures) {
@@ -311,15 +297,16 @@ app.post('/upload_iindia', upload.array('mediaFiles'), async (req, res) => {
   console.log(cn);
   console.log(files);
   try {
+    const query1 = `
+      UPDATE visited_cities
+      SET media_files = media_files || $3
+      WHERE id = $1 AND name = $2
+    `;
       await db.query(
-          `INSERT INTO visited_cities (id,name, media_files) 
-           VALUES ($1, $2, $3)
-           ON CONFLICT (id, name) 
-           DO UPDATE SET media_files = array_cat(visited_cities.media_files, EXCLUDED.media_files)`,
-          [req.user.id, cn, files]
+          query1,[req.user.id, req.body.city_name, files]
       );
-      
-      console.log(`Successfully uploaded media files for user ID: ${req.user.id} and city name: ${cn}`);
+      console.log(req.body.city_name);
+      console.log(`Successfully uploaded media files for user ID: ${req.user.id} and city name: ${req.body.city_name}`);
       req.flash('success', 'Successfully uploaded media files');
       res.redirect("/memories")
   } catch (err) {
@@ -374,12 +361,27 @@ app.post("/watch_memories", async (req,res)=>{
 app.post('/uploadIndia',async (req, res) => {
   const cityN = req.body.city;
   console.log(cityN);
-  res.render("Upload_memories_india.ejs",{cname: req.body.country});
+  res.render("Upload_memories_india.ejs",{cname: cityN});
 });
 app.post('/showIndia',async (req, res) => {
-  const cityN = req.body.city;
-  console.log(cityN);
-  res.send("yes");
+  const cn = req.body.city;
+  console.log(cn);
+    console.log(cn);
+    const result = await db.query(
+        `SELECT media_files FROM visited_cities WHERE id = $1 AND name = $2`,
+        [req.user.id,cn,]
+    );
+    console.log(result.rows[0]);
+    const mediaFiles = (result.rows[0]?.media_files || []).map(file => {
+      if (file) {
+        const mimeType = getMimeType(file);
+        console.log(mimeType);
+        return `data:${mimeType};base64,${file.toString('base64')}`;
+      }
+      return null;
+    }).filter(file => file !== null);
+  
+    res.render("watch_memories.ejs", { mediaFiles });
 });
 passport.use(
   new Strategy(async function verify(username, password, cb) {
