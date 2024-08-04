@@ -5,32 +5,366 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelTale</title>
     <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        .typing-container {
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        height: 50px;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        }
+        .yd, .ys, .yp {
+        visibility: hidden;
+        white-space: nowrap;
+        overflow: hidden;
+        }
+
+        .card {
+            width: 22vw;
+            height: 79vh;
+            border: 2px solid black;
+            border-radius: 20px;
+            /* display: inline-block; */
+            /* vertical-align: top; */
+            /* text-align: center; */
+            /* border: 1px solid #ccc; */
+        }
+        .card p{
+            position: absolute;
+            top: 55vh;
+            margin-left: 20px;
+            color: white;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            /* border: 2px solid red; */
+        }
+        .card a{
+            position: absolute;
+            top: 68vh;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            height: 6vh;
+            width: 14vw;
+            border: 2px solid white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .card a:hover{
+            color: white;
+            /* font-size: 1.55rem; */
+            font-weight: bolder;
+            transition-duration: 0.1s;
+            border: 2.6px solid white;
+        }
+        .card img{
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+        }
+        .carousel-container {
+            width: 50vw; /* Width for two cards side by side */
+            height: 80vh;
+            overflow: hidden;
+            white-space: nowrap;
+            /* border: 2px solid red; */
+        }
+        .inner-container {
+            width: 150vw; /* Width for two cards side by side */
+            height: 80vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            transition: transform 0.5s ease-in-out;
+        }
+      </style>
 </head>
 <body>
-    <% if(locals.userName){ %>
-        <h1>Hey <%= userName %></h1>
-        <div class="front-page">
-            <div class="bgfp">
-                <img src="/travel8.jpg">
+    <div class="yhome">
+        <div class="ybgim">
+            <img src="p1.jpg">
+        </div>
+        <div class="ynav">
+        </div>
+        <div class="navi">
+            <a href="/" style="text-decoration: none; color: black;">
+                <div class="ylogo">
+                    <img src="file.png">
+                    <p>Travel<span style="font-weight: 100;">Tales</span></p>
+                </div>
+            </a>
+            <div class="ylinks">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#ti">Travel Information</a></li>
+                    <li><a href="#aboutUs">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
             </div>
-            <div class="visited">
-                <a href="/visited_countries" class="dashboard-button">Visited Countries</a>
-                <a href="/plan_a_trip" class="dashboard-button">Future Trips</a>
-                <a href="/profile" class="dashboard-button">profile</a>
+            <% if (locals.userName) { %>
+            <div class="yname">
+                Hello! <%= userName %>
+                <a href="/logout">LogOut</a>
+            </div>
+            <% } else { %>
+            <div class="yname">
+                <a href="/login">LogIn</a>
+                <a href="/register">SignUp</a>
+            </div>
+            <% } %>
+        </div>
+        <div class="ysocial">
+            <div class="ysbox">
+                <img src="t.png">
+            </div>
+            <div class="ysbox">
+                <img src="f.png">
+            </div>
+            <div class="ysbox">
+                <img src="g.png">
+            </div>
+            <div class="ysbox">
+                <img src="y.png">
+            </div>
+            <div class="ysbox">
+                <img src="i.png">
             </div>
         </div>
-        
+        <div class="ydb"></div>
+        <div class="ysb"></div>
+        <div class="ypb"></div>
+        <div class="typing-container">
+            <div class="yd">
+                Discover
+            </div>
+            <div class="ys">
+                Spectacular
+            </div>
+            <div class="yp">
+                Places
+            </div>
+        </div>
+    </div>
+    <div class="ybtnsb"></div>
+    <% if(locals.userName){ %>
+        <div class="ybtns">
+            <a href="/visited_countries">Visited Countries</a>
+            <a href="/plan_a_trip">Future Trips</a>
+            <a href="/profile">profile</a>
+        </div>
     <% }else{ %>
-        <div class="front-page">
-            <div class="bgfp">
-                <img src="/travel1.jpg">
-            </div>
-            <div class="login">
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-            </div>
+        <div class="ybtns">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
         </div>
     <% } %>
+    <div class="yhome2" id="ti">
+        <div class="ylfh2">
+            <div class="top1">
+                WHERE TO GO
+            </div>
+            <div class="top2">
+                Pick your own journey.
+            </div>
+            <div class="top3">
+                Are you planning your next adventure and need some inspiration? Look no further! Our platform is designed to help you find exactly what's on your mind and make the best out of your upcoming trip. Explore a wide variety of categories tailored to suit every traveler's dream.
+            </div>
+            <div class="top4">
+                <a href="#">See All</a>
+            </div>
+        </div>
+        <div class="yrh2">
+            <div class="carousel-container">
+                <div class="inner-container" id="carousel">
+                    <div class="card">
+                        <img src="trekking.jpg" alt="Card 1">
+                        <p>Trekking & Mountains</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                    <div class="card">
+                        <img src="beach.jpg" alt="Card 2">
+                        <p>Sun & Beach</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                    <div class="card">
+                        <img src="peacefull.jpg" alt="Card 3">
+                        <p>Peaceful Places</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                    <div class="card">
+                        <img src="mountains.jpg" alt="Card 4">
+                        <p>Mountains</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                    <div class="card">
+                        <img src="natural.jpg" alt="Card 5">
+                        <p>Nature</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                    <div class="card">
+                        <img src="spiritual.jpg" alt="Card 6">
+                        <p>Spiritual</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about" id="aboutUs">
+        <div class="aboutLeft">
+            <img src="camera1.jpg">
+        </div>
+        <div class="aboutRight">
+            <div class="top1">
+                WHAT DO WE DO ?
+            </div>
+            <div class="top2">
+                About Us.
+            </div>
+            <div class="top3">
+                <ul>
+                    <li>Plan your next adventure with us.</li> <br>
+                    <li>Enjoy every moment of your trip.</li> <br>
+                    <li>Share the unforgettable memories of your trip with us.</li> <br>
+                    <li>Return to us anytime you want to relive and watch the cherished memories of your trip.</li> <br>
+                </ul>
+            </div>
+            <div class="top4">
+                <a href="#">Know More</a>
+            </div>
+        </div>
+    </div>
+    <div class="footerHomePage" id="contact">
+        <div class="ysocial1">
+            <div class="ysbox">
+                <img src="t.png">
+            </div>
+            <div class="ysbox">
+                <img src="f.png">
+            </div>
+            <div class="ysbox">
+                <img src="g.png">
+            </div>
+            <div class="ysbox">
+                <img src="y.png">
+            </div>
+            <div class="ysbox">
+                <img src="i.png">
+            </div>
+        </div>
+        <div class="footerTxt">
+            <div style="color: white">Developed and hosted by <a href="/" style="color: #a3d2f9">Travel Tales Team</a></div>
+            <div style="color: white">All rights reserved © 2024</div>
+        </div>
+        <div class="footerLeftim">
+            <div class="footeri">
+                <img src="gpay.png">
+            </div>
+        </div>
+        <div class="footerRightim">
+            <div class="footeri">
+                <img src="visa.png">
+            </div>
+        </div>
+    </div>
+    <script>
+        function typeText(element, text, callback) {
+          let index = 0;
+          element.textContent = ""; // Reset text content before typing
+          function type() {
+            if (index < text.length) {
+              element.textContent += text.charAt(index);
+              index++;
+              setTimeout(type, 35);
+            } else {
+              setTimeout(callback, 1); // Pause before next action
+            }
+          }
+          type();
+        }
     
+        function eraseText(element, callback) {
+          let text = element.textContent;
+          let index = text.length;
+          function erase() {
+            if (index >= 0) {
+              element.textContent = text.substring(0, index);
+              index--;
+              setTimeout(erase, 10);
+            } else {
+              element.style.visibility = 'hidden';
+              setTimeout(callback, 1); // Pause before next action
+            }
+          }
+          erase();
+        }
+    
+        function startTyping() {
+          const elements = [
+            document.querySelector('.yd'),
+            document.querySelector('.ys'),
+            document.querySelector('.yp')
+          ];
+          
+          function cycle(index) {
+            if (index >= elements.length) {
+              setTimeout(() => {
+                let eraseIndex = 0;
+                function eraseNext() {
+                  if (eraseIndex < elements.length) {
+                    eraseText(elements[eraseIndex], eraseNext);
+                    eraseIndex++;
+                  } else {
+                    setTimeout(() => cycle(0), 1);
+                  }
+                }
+                eraseNext();
+              }, 1);
+            } else {
+              let element = elements[index];
+              element.style.visibility = 'visible';
+              typeText(element, element.dataset.text, () => cycle(index + 1));
+            }
+          }
+          
+          elements.forEach((element) => {
+            element.dataset.text = element.textContent; // Store the original text
+          });
+          
+          cycle(0);
+        }
+    
+        startTyping();
+
+
+
+        //this is for home 2
+        const carousel = document.getElementById('carousel');
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.card');
+        const totalCards = cards.length;
+        const cardsToShow = 2;
+
+        function showCards() {
+            const cardWidth = window.innerWidth*0.25; // card width + margin
+            const totalWidth = cardWidth * totalCards;
+            const maxIndex = Math.ceil(totalCards / cardsToShow) - 1;
+            carousel.style.transform = `translateX(-${currentIndex * cardWidth * cardsToShow}px)`;
+            currentIndex = (currentIndex + 1) % (maxIndex + 1);
+        }
+
+        setInterval(showCards, 3000);
+
+      </script>
 </body>
 </html>

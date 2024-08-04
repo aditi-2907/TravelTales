@@ -7,8 +7,9 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import session from "express-session";
 import flash from "express-flash";
+import 'dotenv/config'
 
-const port= 3000;
+const port= process.env.port||3000;
 const saltRounds = 5;
 var timepass = -1;
 
@@ -32,10 +33,10 @@ const upload = multer({
 const app=express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
-
+console.log(process.env.secret);
 app.use(
     session({
-      secret: "TOPSECRETWORD",
+      secret: process.env.secret,
       resave: false,
       saveUninitialized: true,
     })
@@ -47,8 +48,8 @@ app.use(passport.session());
 const db = new pg.Client({
     user: "postgres",
     host: "localhost",
-    database: "TravelTales",
-    password: "Aditi123*",
+    database: "TravelTale",
+    password: "1234qwer",
     port: 5432,
 }); 
 db.connect();
@@ -115,7 +116,9 @@ app.get("/",(req,res)=>{
         res.render("index.ejs");
     }
 })
-
+// app.get("*",(req,res) => {
+//   res.redirect("/");
+// })
 app.get("/visited_countries", async (req,res)=>{
     const countries = await checkVisisted(req.user.id);
     res.render("visited_countries.ejs", { countries: countries, total: countries.length });
@@ -124,7 +127,7 @@ app.get("/visited_countries", async (req,res)=>{
 app.listen(port,()=>{
     console.log(`server running on ${port}`);
 })
-
+//TODO: sql injection
 app.post("/register", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
@@ -252,7 +255,6 @@ app.post('/Upload_memories',async (req, res) => {
         const result = await db.query('SELECT name FROM cities');
         const countries1 = result.rows.map(row => row.name);
         console.log(countries1);
-        console.log("yhii thaa");
         res.render('India_map.ejs', { countries1 ,a1: 1, cities: result1.rows});
       } catch (err) {
         console.error(err);
@@ -358,6 +360,14 @@ app.post("/watch_memories", async (req,res)=>{
     res.render("watch_memories.ejs", { mediaFiles });
   }
 })
+app.get("/logout", (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
 app.post('/uploadIndia',async (req, res) => {
   const cityN = req.body.city;
   console.log(cityN);
