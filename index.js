@@ -127,7 +127,6 @@ app.get("/visited_countries", async (req,res)=>{
 app.listen(port,()=>{
     console.log(`server running on ${port}`);
 })
-//TODO: sql injection
 app.post("/register", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
@@ -235,7 +234,7 @@ app.get("/memories", async (req,res)=>{
       const result = await db.query('SELECT country_name FROM countries');
       const countries1 = result.rows.map(row => row.country_name);
       console.log(countries1);
-      res.render('memories.ejs', { countries1 });
+      res.render('memories.ejs', { countries1 ,userName: req.user.name});
     } catch (err) {
       console.error(err);
       res.status(500).send('Server Error');
@@ -262,7 +261,7 @@ app.post('/Upload_memories',async (req, res) => {
       }
     }
     else{
-      res.render("Upload_memories.ejs",{cname: req.body.country});
+      res.render("Upload_memories.ejs",{cname: req.body.country,userName: req.user.name});
     }
 });
 app.post('/upload', upload.array('mediaFiles'), async (req, res) => {
@@ -371,7 +370,7 @@ app.get("/logout", (req, res) => {
 app.post('/uploadIndia',async (req, res) => {
   const cityN = req.body.city;
   console.log(cityN);
-  res.render("Upload_memories_india.ejs",{cname: cityN});
+  res.render("Upload_memories_india.ejs",{cname: cityN,userName: req.user.name});
 });
 app.post('/showIndia',async (req, res) => {
   const cn = req.body.city;

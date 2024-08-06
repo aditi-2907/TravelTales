@@ -7,27 +7,97 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    <div class="front-page">
-      <div class="bgfp">
-        <img src="/travel1.jpg">
+  <div class="lrpg">
+    <div class="ynav" style="background-color: rgb(129, 129, 219);">
+    </div>
+    <div class="navi">
+        <a href="/" style="text-decoration: none; color: black;">
+            <div class="ylogo">
+                <img src="file.png">
+                <p>Travel<span style="font-weight: 100;">Tales</span></p>
+            </div>
+        </a>
+        <div class="ylinks">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#ti">Travel Information</a></li>
+                <li><a href="#aboutUs">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <% if (locals.userName) { %>
+        <div class="yname">
+            
+        </div>
+        <% } else { %>
+        <div class="yname" style="color: black;">
+        Register Here
+        </div>
+        <% } %>
+    </div>
+
+
+
+    <div class="loginr">
+      <img src="album1.png">
+    </div>
+    <div class="loginmp">
+      <img src="gmap1.png">
+    </div>
+  </div>
+  <div class="llpg">
+      <div class="top1">
+          READY TO EXPLORE ?
       </div>
-      <div class="login">
-        <form action="/register" method="POST" class="formsiz">
-          <div class="form-group">
+      <div class="top2">
+        Register Here
+      </div>
+      <div class="ltop3">
+        <form action="/register" method="POST" class="logform">
               <label for="name">Name</label>
               <input type="name" class="form-control" name="nameofuser">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="username">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password">
-          </div>
-          <button type="submit" class="btn btn-dark">Register</button>
-      </form>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="username">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password">
+              <button type="submit" class="yehhao" style="height: 6vh;">Register</button>
+            </form>
+            <button class="lgbtn" style="border: none;"></button>
       </div>
+      
+  </div>
+  <div class="footerHomePage" style="position: absolute; top: 100vh;" id="contact">
+    <div class="ysocial1">
+        <div class="ysbox">
+            <img src="t.png">
+        </div>
+        <div class="ysbox">
+            <img src="f.png">
+        </div>
+        <div class="ysbox">
+            <img src="g.png">
+        </div>
+        <div class="ysbox">
+            <img src="y.png">
+        </div>
+        <div class="ysbox">
+            <img src="i.png">
+        </div>
     </div>
+    <div class="footerTxt">
+        <div style="color: white">Developed and hosted by <a href="/" style="color: #a3d2f9">Travel Tales Team</a></div>
+        <div style="color: white">All rights reserved © 2024</div>
+    </div>
+    <div class="footerLeftim">
+        <div class="footeri">
+            <img src="gpay.png">
+        </div>
+    </div>
+    <div class="footerRightim">
+        <div class="footeri">
+            <img src="visa.png">
+        </div>
+    </div>
+</div>
 </body>
 </html>

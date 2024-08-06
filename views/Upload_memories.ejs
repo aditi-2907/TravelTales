@@ -7,19 +7,92 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    <div class="front-page">
-        <div class="bgfp">
-            <img src="travel9.jpg">
+    <div class="upa">
+        <div class="ynav" style="background-color: rgb(129, 129, 219);">
         </div>
-        <div class="createMem">
-            <h1>Create Memories</h1>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="country_name" value="<%= cname %>">
-                <!-- <label for="mediaFiles">Select Media Files:</label> -->
-                <input type="file" id="mediaFiles" name="mediaFiles" multiple required><br><br>
-                <button type="submit">Upload</button>
-            </form>
+        <div class="navi">
+            <a href="/" style="text-decoration: none; color: black;">
+                <div class="ylogo">
+                    <img src="file.png">
+                    <p>Travel<span style="font-weight: 100;">Tales</span></p>
+                </div>
+            </a>
+            <div class="ylinks">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#ti">Travel Information</a></li>
+                    <li><a href="#aboutUs">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <% if (locals.userName) { %>
+            <div class="yname" style="color:black;">
+                Hello! <%= userName %>
+            </div>
+            <% } else { %>
+            <div class="yname" style="color: black;">
+            </div>
+            <% } %>
         </div>
+        <div class="llpg">
+            <div class="top1">
+                UPLOAD YOUR MEMORIES
+            </div>
+            <div class="top2">
+              Upload Here
+            </div>
+            <div class="ltop3">
+                <form action="/upload" method="post" enctype="multipart/form-data" class="logform">
+                    <input type="hidden" name="country_name" value="<%= cname %>">
+                    <label for="mediaFiles" style="  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ margin-bottom: 10px; font-size: 1.2rem;                     ">Select Media Files:</label>
+                    <input type="file" id="mediaFiles" name="mediaFiles" style=" border: none; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                    " required><br><br>
+                    <button type="submit">Upload</button>
+                </form>
+        
+            </div>
+            
+        </div>
+        <div class="loginr">
+          <img src="upload.png">
+        </div>
+        
     </div>
+    
+    <div class="footerHomePage" style="position: absolute; top: 100vh;" id="contact">
+        <div class="ysocial1">
+            <div class="ysbox">
+                <img src="t.png">
+            </div>
+            <div class="ysbox">
+                <img src="f.png">
+            </div>
+            <div class="ysbox">
+                <img src="g.png">
+            </div>
+            <div class="ysbox">
+                <img src="y.png">
+            </div>
+            <div class="ysbox">
+                <img src="i.png">
+            </div>
+        </div>
+        <div class="footerTxt">
+            <div style="color: white">Developed and hosted by <a href="/" style="color: #a3d2f9">Travel Tales Team</a></div>
+            <div style="color: white">All rights reserved © 2024</div>
+        </div>
+        <div class="footerLeftim">
+            <div class="footeri">
+                <img src="gpay.png">
+            </div>
+        </div>
+        <div class="footerRightim">
+            <div class="footeri">
+                <img src="visa.png">
+            </div>
+        </div>
+            
+   
 </body>
 </html>

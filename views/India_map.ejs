@@ -45,9 +45,9 @@
         .mapa {
             position: absolute;
             top: 2vh;
-            left: 26.5vw;
+            left: 27vw;
             height: 97vh;
-            width: 49vw;
+            width: 46vw;
         }
         .chk {
             position: absolute;
@@ -59,8 +59,36 @@
         }
         .dropdown {
             position: relative;
+            top: 10vh;
+            left: 2vw;
             display: inline-block;
+            /* border: 2px solid red; */
             z-index: 10000000;
+        }
+        .dropdown input{
+            width: 12vw;
+            height: 5vh;
+            /* border: 3px solid black; */
+            border-radius: 10px;
+        }
+        .dropdown input::placeholder{
+            font-size: 1.1rem;
+            color: rgb(81, 80, 80);
+        }
+        .dropdown form button{
+            width: 7vw;
+            margin-left: 15px;
+            height: 5.9vh;
+            /* border: 2px solid black; */
+            background-color: teal;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .dropdown form button:hover{
+            background-color: black;
+            cursor: pointer;
+            color: white;
         }
         .dropdown-content {
             display: none;
@@ -86,9 +114,19 @@
           color: green;
           display: none;
         }
+        .imapfull{
+            position: absolute;
+            top: 0vh;
+            left: 0vw;
+            height: 100vh;
+            width: 99vw;
+            background-color: #EEEDFF;
+            
+        }
     </style>
 </head>
 <body>
+    <div class="imapfull">
     <div class="dropdown">
         <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for cities..">
         <div id="dropdown" class="dropdown-content">
@@ -104,7 +142,7 @@
     <div class="chk"></div>
     <div id="map-container">
         <div class="mapa">
-            <img id="map" src="/mp.jpg" alt="Map of India">
+            <img id="map" src="/map2.jpg" alt="Map of India">
         </div>
 
         <!-- Cities markers -->
@@ -124,7 +162,8 @@
     <form id="city-form-2" action="/showIndia" method="POST" style="display: none;">
         <input type="hidden" name="city" id="city-input-2">
     </form>
-
+    </div>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const mapImage = document.getElementById('map');
@@ -139,8 +178,8 @@
 
                 // Map boundaries in latitude and longitude
                 const mapBounds = {
-                    top: 38,    // Northern boundary
-                    bottom: 9,  // Southern boundary
+                    top: 38.6,    // Northern boundary
+                    bottom: 9.3,  // Southern boundary
                     left: 51,   // Western boundary
                     right: 80   // Eastern boundary
                 }; 

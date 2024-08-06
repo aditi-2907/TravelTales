@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TravelTale</title>
-  <link rel="stylesheet" href="/styles/map.css">
+  <title>Travel Tracker</title>
+  <link rel="stylesheet" href="./styles/map.css">
 </head>
 
 <body>
@@ -13,11 +13,7 @@
     <input type="text" name="country" autofocus placeholder="<%= locals.error ? error :  'Enter country name'%>">
     <button type="submit">Add</button>
   </form>
-
-  <div class="memory">
-    <a href="/memories" class="memory-btn">Memories</a>
-  </div>
-
+  <a href="/memories" style="color: white; text-decoration: none;"><button class="btt" style="margin-top: 20px;">Memories</button></a>
   <section class="ag-canvas">
     <svg class="ag-canvas_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1" viewBox="0 0 1008 651">

@@ -48,32 +48,117 @@
       </script>
 </head>
 <body>
-    <% if (messages.success) { %>
-        <div class="flash-message"><%= messages.success %></div>
-    <% } %>
-    <div class="front-page">
-        <div class="bgfp">
-            <img src="travel7.jpg">
+
+    <div class="memo">
+        <div class="ynav" style="background-color: rgb(129, 129, 219);">
         </div>
-        <div class="memories">
-            <div class="dropdown">
-                <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Search for countries..">
-                <div id="dropdown" class="dropdown-content">
-                    <% countries1.forEach(country => { %>
-                        <div onclick="selectCountry('<%= country %>')"><%= country %></div>
-                    <% }); %>
+        <div class="navi">
+            <a href="/" style="text-decoration: none; color: black;">
+                <div class="ylogo">
+                    <img src="file.png">
+                    <p>Travel<span style="font-weight: 100;">Tales</span></p>
                 </div>
+            </a>
+            <div class="ylinks">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#ti">Travel Information</a></li>
+                    <li><a href="#aboutUs">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
             </div>
-            <form id="form1" action="/Upload_memories" method="post" style="display: inline;">
-                <input type="hidden" name="country" id="selectedCountry1">
-                <button type="submit" class="dashboard-button">Create Memories</button>
-            </form>
-            <form id="form2" action="/watch_memories" method="post" style="display: inline;">
-                <input type="hidden" name="country" id="selectedCountry2">
-                <button type="submit" class="dashboard-button">See Memories</button>
-            </form>
+            <% if (locals.userName) { %>
+            <div class="yname" style="color:black;">
+                Hello! <%= userName %>
+            </div>
+            <% } else { %>
+            <div class="yname" style="color: black;">
+            </div>
+            <% } %>
+        </div>
+        <div class="meml">
+            <img src="mdm1.png">
+        </div>
+        <div class="memlu">
+            <img src="gmap1.png">
+        </div>
+        <div class="aboutRight1">
+            <div class="top1">
+                UPLOAD / WATCH MEMORIES
+            </div>
+            <div class="top2">
+                Your Travel Stories.
+            </div>
+            <div class="top3">
+                <ul>
+                    <li>Select The Country.</li> <br>
+                    <li>Upload Your Adventures.</li> <br>
+                    <li>Relive Your Journeys.</li> <br>
+                </ul>
+            </div>
+            <div class="top41">
+                
+            </div>
+        </div>
+        <form id="form1" action="/Upload_memories" method="post">
+            <input type="hidden" name="country" id="selectedCountry1">
+            <button type="submit" class="db1" style="font-size: 1.3rem;">Upload</button>
+        </form>
+        <form id="form2" action="/watch_memories" method="post">
+            <input type="hidden" name="country" id="selectedCountry2">
+            <button type="submit" class="db2" style="font-size: 1.3rem;">Watch</button>
+        </form>
+
+        <div class="dropdown">
+            <label for="countryInput" >Select The Country First</label> <br>
+            <input type="text" id="countryInput" onkeyup="filterFunction()" placeholder="Select The Country.." style="height: 6vh; width: 20vw; border: 2px solid black; margin-top: 15px; border-radius: 15px;">
+            <div id="dropdown" class="dropdown-content">
+                <% countries1.forEach(country => { %>
+                    <div onclick="selectCountry('<%= country %>')"><%= country %></div>
+                <% }); %>
+            </div>
         </div>
     </div>
+    <% if (messages.success) { %>
+        <div class="fmsg"><%= messages.success %></div>
+    <% } %>
+    <div class="footerHomePage" style="position: absolute; top: 100vh;" id="contact">
+        <div class="ysocial1">
+            <div class="ysbox">
+                <img src="t.png">
+            </div>
+            <div class="ysbox">
+                <img src="f.png">
+            </div>
+            <div class="ysbox">
+                <img src="g.png">
+            </div>
+            <div class="ysbox">
+                <img src="y.png">
+            </div>
+            <div class="ysbox">
+                <img src="i.png">
+            </div>
+        </div>
+        <div class="footerTxt">
+            <div style="color: white">Developed and hosted by <a href="/" style="color: #a3d2f9">Travel Tales Team</a></div>
+            <div style="color: white">All rights reserved © 2024</div>
+        </div>
+        <div class="footerLeftim">
+            <div class="footeri">
+                <img src="gpay.png">
+            </div>
+        </div>
+        <div class="footerRightim">
+            <div class="footeri">
+                <img src="visa.png">
+            </div>
+        </div>
+        
+    
+            
+        
+    
 
     <script>
         function filterFunction() {
